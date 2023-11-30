@@ -1,0 +1,153 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Quizify</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css"
+  rel="stylesheet"
+/>
+  <!-- Your CSS and other meta tags -->
+  <style>
+    /* Height for devices larger than 576px */
+    @media (min-width: 992px) {
+      #intro {
+        margin-top: -58.59px;
+        height: 9vh !important;
+      }
+    }
+
+    .navbar .nav-link {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    {% include 'navbar.html' %}
+    <!-- Your header content -->
+  </header>
+  
+  <main>
+    <div id="intro" class="bg-image vh-100 shadow-1-strong">
+        <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
+          <source class="h-100"
+            src="https://mdbootstrap.com/img/video/animation-intro-min.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="mask" style="
+              background: linear-gradient(
+                45deg,
+                rgba(29, 236, 197, 0.7),
+                rgba(91, 14, 214, 0.7) 100%
+              );
+            ">
+          <!-- <div class="container d-flex align-items-center justify-content-center text-center h-100">
+            <div class="text-white">
+              <h1 class="mb-3">Welcome to Quizify</h1>
+              <h5 class="mb-4">Best & free site for generating Quizes with AI</h5>
+              <a class="btn btn-outline-light btn-lg m-2"  href="{% url 'view_pdf' %}" role="button"
+                rel="nofollow" >Generate Quiz</a>
+            
+            </div>
+          </div> -->
+        
+
+   
+
+        </div>
+      </div>
+
+
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <!-- <div class="quiz-details">
+                   
+                    <div>
+                        <i class="fas fa-question-circle"></i>
+                        <h3>Number of Questions:</h3>
+                    </div>
+                    
+                
+                    <div>
+                        <i class="fas fa-clock"></i>
+                        <h3>Duration:</h3>
+                    </div>
+                
+                    <div>
+                        <i class="fas fa-tasks"></i>
+                        <h3>Your Quiz:</h3>
+                    </div>
+                </div> -->
+                <div class="card-body">
+                 
+               
+                    <div class="quiz-container">
+                        {% for question_data in quiz_data %}
+                            <div class="question">{{ question_data.question }}</div>
+                            <div class="options">
+                                {% for option in question_data.options %}
+                                    <div class="option">
+                                        <input type="radio" name="option_{{ forloop.parentloop.counter0 }}" value="{{ forloop.counter0 }}"> {{ option }}
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        {% endfor %}
+                        <button type="submit" class="btn btn-primary mt-2" onclick="checkAnswers()">Submit</button>
+                        <p id="result"></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function checkAnswers() {
+        let questions = document.querySelectorAll('.question');
+        let correctAnswers = [1, 1]; // Set the correct answer indices for each question
+        
+        let allCorrect = true;
+        for (let i = 0; i < questions.length; i++) {
+            let selectedOption = document.querySelector('input[name="option_' + i + '"]:checked');
+            if (!selectedOption) {
+                allCorrect = false;
+                document.getElementById('result').innerText = "Please answer all questions.";
+                break;
+            } else {
+                let userAnswer = parseInt(selectedOption.value);
+                if (userAnswer !== correctAnswers[i]) {
+                    allCorrect = false;
+                    document.getElementById('result').innerText = "Incorrect. Try again!";
+                    break;
+                }
+            }
+        }
+        
+        if (allCorrect) {
+            document.getElementById('result').innerText = "All answers are correct!";
+        }
+    }
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>

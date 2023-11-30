@@ -1,0 +1,199 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us - Quizify</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+/>
+<!-- Google Fonts -->
+<link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+/>
+<!-- MDB -->
+<link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/7.0.0/mdb.min.css"
+  rel="stylesheet"
+/>
+  <!-- Your CSS and other meta tags -->
+  <style>
+    /* Height for devices larger than 576px */
+    @media (min-width: 992px) {
+      #intro {
+        margin-top: -58.59px;
+        height: 9vh !important;
+      }
+    }
+
+    .navbar .nav-link {
+      color: #fff !important;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    {% include 'navbar.html' %}
+    <!-- Your header content -->
+  </header>
+  
+  <main>
+    <div id="intro" class="bg-image vh-100 shadow-1-strong">
+        <video style="min-width: 100%; min-height: 100%;" playsinline autoplay muted loop>
+          <source class="h-100"
+            src="https://mdbootstrap.com/img/video/animation-intro-min.mp4"
+            type="video/mp4"
+          />
+        </video>
+        <div class="mask" style="
+              background: linear-gradient(
+                45deg,
+                rgba(29, 236, 197, 0.7),
+                rgba(91, 14, 214, 0.7) 100%
+              );
+            ">
+          <!-- <div class="container d-flex align-items-center justify-content-center text-center h-100">
+            <div class="text-white">
+              <h1 class="mb-3">Welcome to Quizify</h1>
+              <h5 class="mb-4">Best & free site for generating Quizes with AI</h5>
+              <a class="btn btn-outline-light btn-lg m-2"  href="{% url 'view_pdf' %}" role="button"
+                rel="nofollow" >Generate Quiz</a>
+            
+            </div>
+          </div> -->
+        
+
+   
+
+        </div>
+      </div>
+ 
+  </main>
+
+
+
+
+ <div class="container mt-4">
+    <h2>Generate A Quiz</h2>
+    <!-- <div class="mt-4">
+        <form method="post" action="{% url 'take_quiz' %}">
+        <div class="container">
+            <textarea type="text" class="form-control" placeholder="Enter some text" name="textbox"id="textbox" style="height: 200px;"></textarea>
+            <span id="wordCount" style="font-size: 14px;">0 words</span>
+            <span id="limitExceeded" style="color: red; display: none;">Limit exceeded</span>
+    
+
+
+        </br>
+            <label for="numQuestions">Number of Questions:</label>
+            <select class="form-select" name="numQuestions" id="numQuestions">
+                <option value="5">5</option>
+                <option value="10">10</option>
+                <option value="15">15</option>
+            </select>
+      
+</br>
+<button type="submit" class="btn btn-primary mt-2">Generate Quiz</button>
+        </div>
+        </form>
+    </div> -->
+
+
+    <div class="mt-4">
+        <form method="post" action="{% url 'take_quiz' %}">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <textarea type="text" class="form-control" placeholder="Enter Your text (limit is 500 words)" name="textbox" id="textbox" style="height: 200px;"></textarea>
+                        <span id="wordCount" style="font-size: 14px;">0 words</span>
+                        <span id="limitExceeded" style="color: red; display: none;">Limit exceeded</span>
+                       </br>
+                        <label for="numQuestions">Number of Questions:</label>
+                        </br>
+                        <select class="form-select" name="numQuestions" id="numQuestions">
+                            <option value="5">5</option>
+                            <option value="10">10</option>
+                            <option value="15">15</option>
+                        </select>
+                    </br>
+                        <button type="submit" class="btn btn-primary mt-2">Generate Quiz</button>
+                    </div>
+                    <div class="col-md-6" >
+                        <img src="{% static 'images/quiz.webp' %}" alt="Image" class="img-fluid" />
+                    </div>
+                </div>
+    
+          
+            </div>
+        </form>
+    </div>
+    
+    
+
+</div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<script>
+    const textarea = document.getElementById('textbox');
+ const wordCountSpan = document.getElementById('wordCount');
+ const limitExceededSpan = document.getElementById('limitExceeded');
+ console.log(textarea)
+ textarea.addEventListener('input', function() {
+     let text = textarea.value.trim();
+     let words = text.split(/\s+/);
+     let wordCount = words.length > 0 ? words.length : 0;
+ 
+     if (wordCount > 500) {
+         textarea.value = words.slice(0, 500).join(' ');
+         wordCount = 500;
+         limitExceededSpan.style.display = 'inline'; // Show limit exceeded message
+         wordCountSpan.style.color = 'red'; // Change color to red
+     } else {
+         limitExceededSpan.style.display = 'none'; // Hide limit exceeded message
+         wordCountSpan.style.color = 'black';
+          // Reset color
+     }
+ 
+     wordCountSpan.textContent = wordCount + ' words';
+ });
+ 
+ 
+ 
+                 </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
+</body>
+</html>
